@@ -3,17 +3,26 @@ const bcrypt = require('bcryptjs')
 const pool = require('../config/DB')
 
 const register = async (req, res) => {
-    const { email, password, role, name } = req.body;
+    const { email, password, role, username, preferences } = req.body;
 
-    if(!email || !password || !role || !name){
+    console.log(`Email: ${email} Password: ${password} Role: ${role} Username: ${username} Preferences: ${preferences}`)
+
+    if(!email || !password || !role || !username || !preferences){
         console.log("Please Enter some credentials")
         return res.status(404).send("Please Enter some credentials")
     }
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-         await pool.query('INSERT INTO users (email, password, role,name) VALUES ($1, $2, $3,$4) RETURNING *', [email, hashedPassword, role,name]);
-        res.status(201).json({message: "User registered successfully"});
+        let newUser = await pool.query('INSERT INTO users (email, password, role,name) VALUES ($1, $2, $3,$4) RETURNING *', [email, hashedPassword, role,username]);
+        newUser = {
+            id: newUser.rows[0].id,
+            email: newUser.rows[0].email,
+            role: newUser.rows[0].role,
+            username: newUser.rows[0].name,
+            preferences: newUser.rows[0].preferences
+        }
+        res.status(201).json({message: "User registered successfully", user: newUser});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });

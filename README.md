@@ -12,6 +12,14 @@ This is the backend server for the Campus Event System, a web application design
 - Nodemailer
 - CORS
 
+## Links
+
+### Development Link
+- Frontend: https://velvety-starship-094a60.netlify.app
+- Backend: https://campus-management-systembackend.onrender.com
+- Database Admin: http://localhost:8080/pgadmin (PostgreSQL)
+
+
 ## Prerequisites
 - Node.js (v14 or higher)
 - PostgreSQL or MongoDB database
@@ -47,5 +55,22 @@ The API uses standard HTTP response codes:
 This project is licensed under the ISC License.
 
 ## Contact
-Project Maintainer - [Your Name]
+Project Maintainer - Nate
 Project Link: [Repository URL]
+
+
+## Images
+
+### API Documentation
+![Postman Collection](./postman/images/eventGet.png)
+![API Endpoints](./postman/images/registerPost.png)
+
+![Postman Collection](./postman/images/eventList.png)
+![API Endpoints](./postman/images/loginGet.png)
+
+
+
+
+
+
+Note: All images are stored in the `/postman/images` directory.
