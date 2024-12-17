@@ -37,17 +37,35 @@ const registerForEvent = async (req, res) => {
 };
 
 const getAUserRsvp = async (req,res) =>{
+    const userId = req.params.id; // Assuming you have user info in req.user from authentication
+    console.log(`User:${userId}`)
     try {
-        const userId = req.user.id; // Assuming you have user info in req.user from authentication
         
         const query = `
-            SELECT e.*, r.rsvp_status
-            FROM events e
-            INNER JOIN rsvp r ON e.event_id = r.event_id
-            WHERE r.user_id = $1
-            ORDER BY e.event_date DESC
-        `;
-        
+        SELECT 
+            rsvps.id AS rsvp_id,
+            rsvps.status,
+            rsvps.created_at AS rsvp_created_at,
+            events.id AS event_id,
+            events.name,
+            events.description,
+            events.event_date,
+            events.event_time,
+            events.location,
+            events.capacity,
+            events.available_seats,
+            events.type,
+            events.created_by,
+            events.created_at AS event_created_at
+        FROM 
+            rsvps
+        INNER JOIN 
+            events 
+        ON 
+            rsvps.event_id = events.id
+        WHERE 
+            rsvps.user_id = $1
+    `;
         const result = await pool.query(query, [userId]);
         res.json(result.rows);
     } catch (error) {
@@ -60,5 +78,6 @@ const getAUserRsvp = async (req,res) =>{
 module.exports = {
     getEvents,
     getEventById,
-    registerForEvent
+    registerForEvent,
+    getAUserRsvp
 }
