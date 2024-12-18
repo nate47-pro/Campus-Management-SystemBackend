@@ -75,9 +75,64 @@ const getAUserRsvp = async (req,res) =>{
 
 }
 
+const createEvent = async (req, res) => {
+    let {
+      name,
+      description,
+      event_date,
+      event_time,
+      capacity,
+      available_seats,
+      location,
+      type,
+      created_by,
+    } = req.body;
+    console.log(
+      `name: ${name} || description: ${description} || event_date: ${event_date} || event_time: ${event_time} || capacity: ${capacity} || available_seats: ${available_seats} || location: ${location} || type: ${type} || created_by: ${created_by}`
+    );
+    if (
+      !name ||
+      !description ||
+      !event_date ||
+      !event_time ||
+      !capacity ||
+      !available_seats ||
+      !location ||
+      !type ||
+      !created_by
+    ) {
+      console.log("All fields are required");
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    try {
+      capacity = parseInt(capacity);
+      available_seats = parseInt(available_seats);
+      await pool.query(
+        "INSERT INTO events (name, description, event_date, event_time, capacity, available_seats, location, type, created_by) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+        [
+          name,
+          description,
+          event_date,
+          event_time,
+          capacity,
+          available_seats,
+          location,
+          type,
+          created_by,
+        ]
+      );
+      console.log("Event created successfully");
+      return res.status(201).json({ message: "Event created successfully" });
+    } catch (error) {
+      console.error("Error creating event:", error);
+      return res.status(500).json({ error: "Error creating event" });
+    }
+  };
+
 module.exports = {
     getEvents,
     getEventById,
     registerForEvent,
-    getAUserRsvp
+    getAUserRsvp,
+    createEvent
 }
