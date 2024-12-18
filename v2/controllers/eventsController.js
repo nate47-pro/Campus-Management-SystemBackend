@@ -113,7 +113,6 @@ const createEvent = async (req, res) => {
           event_date,
           event_time,
           capacity,
-          available_seats,
           location,
           type,
           created_by,
