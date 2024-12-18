@@ -104,7 +104,7 @@ const createEvent = async (req, res) => {
     }
     try {
       capacity = parseInt(capacity);
-      available_seats = parseInt(available_seats);
+    //   available_seats = parseInt(available_seats);
       await pool.query(
         "INSERT INTO events (name, description, event_date, event_time, capacity, location, type, created_by) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
         [
