@@ -87,7 +87,7 @@ const createEvent = async (req, res) => {
       created_by,
     } = req.body;
     console.log(
-      `name: ${name} || description: ${description} || event_date: ${event_date} || event_time: ${event_time} || capacity: ${capacity} || available_seats: ${available_seats} || location: ${location} || type: ${type} || created_by: ${created_by}`
+      `name: ${name} || description: ${description} || event_date: ${event_date} || event_time: ${event_time} || capacity: ${capacity} || location: ${location} || type: ${type} || created_by: ${created_by}`
     );
     if (
       !name ||
