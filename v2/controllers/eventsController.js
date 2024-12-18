@@ -82,7 +82,6 @@ const createEvent = async (req, res) => {
       event_date,
       event_time,
       capacity,
-      available_seats,
       location,
       type,
       created_by,
@@ -96,7 +95,6 @@ const createEvent = async (req, res) => {
       !event_date ||
       !event_time ||
       !capacity ||
-      !available_seats ||
       !location ||
       !type ||
       !created_by
@@ -108,7 +106,7 @@ const createEvent = async (req, res) => {
       capacity = parseInt(capacity);
       available_seats = parseInt(available_seats);
       await pool.query(
-        "INSERT INTO events (name, description, event_date, event_time, capacity, available_seats, location, type, created_by) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+        "INSERT INTO events (name, description, event_date, event_time, capacity, location, type, created_by) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
         [
           name,
           description,
